@@ -53,6 +53,9 @@ while (<INPUT>) {
         if (/^\.set\s+(\w+)=(.*)/) {
             $symbols {$1} = $2;
         }
+        elsif (/^\.sub\s+([^\/]+)\/(.*)\s*/) {
+            $subsset {$1} = $2;
+        }
         elsif (/^\.\-/) {
             #   Comment, ignore
         }
@@ -104,6 +107,9 @@ exit (0);
 sub writeln {
     local ($_) = @_;
     $_ = expand_symbols ($_);
+    foreach $token (keys %subsset) {
+        s/$token/$subsset{$token}/g;
+    }
     print OUTPUT "$_\n" unless $EOD;
 }
 

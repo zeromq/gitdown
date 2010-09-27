@@ -95,6 +95,7 @@ Gitdown is a pre-processor that adds these syntax elements on top of Markdown:
 
     .- comment                  Comment line
     .set name=value             Sets Gitdown symbol
+    .sub oldval=newval          Replaces oldval by newval in every line
     .end                        Everything past this is ignored
 
     $\(xxx)                     Value of variable, anywhere in text
