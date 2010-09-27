@@ -50,10 +50,10 @@ while (<INPUT>) {
     chop;
     if (/^\./) {
         #   Process directive
-        if (/^\.set\s+(\w+)=(.*)/) {
+        if (/^\.set\s+(\w+)=(.*)\s*/) {
             $symbols {$1} = $2;
         }
-        elsif (/^\.sub\s+([^\/]+)\/(.*)\s*/) {
+        elsif (/^\.sub\s+([^=]+)=(.*)\s*/) {
             $subsset {$1} = $2;
         }
         elsif (/^\.\-/) {
