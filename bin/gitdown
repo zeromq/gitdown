@@ -116,6 +116,9 @@ sub writeln {
 sub writeln_images {
     local ($_) = @_;
     $_ = expand_symbols ($_);
+    foreach $token (keys %subsset) {
+        s/$token/$subsset{$token}/g;
+    }
     print IMAGES "$_\n" unless $EOD;
 }
 
