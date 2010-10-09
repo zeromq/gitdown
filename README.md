@@ -1,6 +1,8 @@
 
 <center>
+
 ![Diagram 1](http://github.com/imatix/gitdown/raw/master/images/README_1.png)
+
 </center>
 <A name="toc1-18" title="Welcome To Gitdown" />
 
@@ -58,7 +60,9 @@ Gitdown exploits github.com's willingness to serve image blobs and Markdown docu
 The Gitdown workflow is:
 
 <center>
+
 ![Diagram 2](http://github.com/imatix/gitdown/raw/master/images/README_2.png)
+
 </center>
 
 1. You edit a text file that contains text and diagrams in a single document.
