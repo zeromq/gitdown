@@ -11,10 +11,7 @@ This is version 2010.10.09 of Gitdown.  Changelog:
 
 * 2010.10.09: added .toc token to generate table of contents.
 
-Table of Contents
------------------
-
-.toc
+.toc 2
 
 Installation and Use
 --------------------
@@ -105,7 +102,7 @@ Gitdown is a pre-processor that adds these syntax elements on top of Markdown:
     .- comment                  Comment line
     .set name=value             Sets Gitdown symbol
     .sub oldval=newval          Replaces oldval by newval in every line
-    .toc                        Insert lazy table of contents
+    .toc                        Insert table of contents
     .end                        Everything past this is ignored
 
     $\(xxx)                     Value of variable, anywhere in text

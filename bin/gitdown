@@ -65,16 +65,24 @@ while ($line < @input) {
             $symbols {$1} = $2;
         }
         elsif (/^\.toc/) {
-            $scan = $line;
-            $prev = "";
-            while ($scan < @input) {
-                $_ = $input [$scan++];
+            #   Determine top level in text after .toc
+            $tocl = 4;
+            for ($scan = $line; $scan < @input; $scan++) {
+                $_ = $input [$scan];
                 if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
-                    if ($2 < 3) {
-                        writeln ("\n**<a href=\"#$1\">$3</a>**");
+                    $tocl = $2 if $2 < $tocl;
+                }
+            }
+            $prev = "";
+            for ($scan = $line; $scan < @input; $scan++) {
+                $_ = $input [$scan];
+                if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
+                    #   Top level items at left, others along same line...
+                    if ($2 > $tocl) {
+                        writeln ("&emsp;<a href=\"#$1\">$3</a>");
                     }
                     else {
-                        writeln ("&emsp;<a href=\"#$1\">$3</a>");
+                        writeln ("\n**<a href=\"#$1\">$3</a>**");
                     }
                 }
             }
@@ -152,9 +160,9 @@ sub writeln_images {
 
 sub insert_anchors {
     $prev = "";
-    while ($line < @input) {
+    for ($line = 0; $line < @input; $line++) {
         $prev = $_;
-        $_ = $input [$line++];
+        $_ = $input [$line];
 
         if (/^===/) {
             splice @input, $line - 2, 0, "<A name=\"toc1-$line\" title=\"$prev\" />";
