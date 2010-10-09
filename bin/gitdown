@@ -113,7 +113,9 @@ while ($line < @input) {
             writeln_images ($_);
         }
         writeln_images ("</pre>");
+        writeln ("<center>");
         writeln ("![Diagram $diagram]($symbols{GIT}/raw/$symbols{BRANCH}$symbols{SUBDIR}/images/$self\_$diagram.png)");
+        writeln ("</center>");
     }
     else {
         #   Normal text
