@@ -22,6 +22,8 @@
 #   Uses the Perl SFL modules from htmlpp
 require 'sflcvdp.pl';                   #   SFL date picture formatting
 
+$version = "2010.10.09";
+
 #   Parse and validate provided filename
 die "Syntax: gitdoc textfilename\n"
     unless $#ARGV == 0;
@@ -32,26 +34,50 @@ $output .= "$self.md";
 die "Input should be a .txt file, not a .md file\n"
     if $input eq $output;
 
+#   Read input file into @input array
 die "Can't read $input: $!"
     unless open (INPUT, $input);
+while (<INPUT>) {
+    chop;
+    push @input, $_;
+}
+close (INPUT);
+&insert_anchors;
+
 die "Can't create $output: $!"
     unless open (OUTPUT, ">$output");
+
 die "Can't create images.html: $!"
     unless open (IMAGES, ">images.html");
+writeln_images ("<html>");
 
 $symbols {"INPUT"}  = $input;
 $symbols {"SELF"}   = $self;
 $symbols {"OUTPUT"} = $output;
 $symbols {"BRANCH"} = "master";
 
-writeln_images ("<html>");
-
-while (<INPUT>) {
-    chop;
+$line = 0;
+while ($line < @input) {
+    $_ = $input [$line++];
     if (/^\./) {
         #   Process directive
         if (/^\.set\s+(\w+)=(.*)\s*/) {
             $symbols {$1} = $2;
+        }
+        elsif (/^\.toc/) {
+            $scan = $line;
+            $prev = "";
+            while ($scan < @input) {
+                $_ = $input [$scan++];
+                if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
+                    if ($2 < 3) {
+                        writeln ("\n**<a href=\"#$1\">$3</a>**");
+                    }
+                    else {
+                        writeln ("&emsp;<a href=\"#$1\">$3</a>");
+                    }
+                }
+            }
         }
         elsif (/^\.sub\s+([^=]+)=(.*)\s*/) {
             $subsset {$1} = $2;
@@ -72,8 +98,8 @@ while (<INPUT>) {
         $diagram = $diagram + 1;
         $symbols {"DIAGRAM"} = $diagram;
         writeln_images ("<pre class=\"textdiagram\" id=\"$self\_$diagram\">");
-        while (<INPUT>) {
-            chop;
+        while ($line < @input) {
+            $_ = $input [$line++];
             last if /\[\/diagram\]/;
             s/#/$diagram/;
             writeln_images ($_);
@@ -88,7 +114,6 @@ while (<INPUT>) {
 }
 writeln_images ("</html>");
 close (IMAGES);
-close (INPUT);
 close (OUTPUT);
 
 system ("rm -f images/$self\_*");
@@ -122,6 +147,41 @@ sub writeln_images {
     print IMAGES "$_\n" unless $EOD;
 }
 
+
+#   Insert anchors into text before each header
+
+sub insert_anchors {
+    $prev = "";
+    while ($line < @input) {
+        $prev = $_;
+        $_ = $input [$line++];
+
+        if (/^===/) {
+            splice @input, $line - 2, 0, "<A name=\"toc1-$line\" title=\"$prev\" />";
+            $line++;
+        }
+        elsif (/^---/) {
+            splice @input, $line - 2, 0, "<A name=\"toc2-$line\" title=\"$prev\" />";
+            $line++;
+        }
+        elsif (/^# /) {
+            splice @input, $line - 1, 0, "<A name=\"toc1-$line\" title=\"$'\" />";
+            $line++;
+        }
+        elsif (/^## /) {
+            splice @input, $line - 1, 0, "<A name=\"toc2-$line\" title=\"$'\" />";
+            $line++;
+        }
+        elsif (/^### /) {
+            splice @input, $line - 1, 0, "<A name=\"toc3-$line\" title=\"$'\" />";
+            $line++;
+        }
+        elsif (/^#### /) {
+            splice @input, $line - 1, 0, "<A name=\"toc4-$line\" title=\"$'\" />";
+            $line++;
+        }
+    }
+}
 
 
 #-- Symbol expansion code, taken from htmlpp
