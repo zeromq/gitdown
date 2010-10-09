@@ -1,9 +1,5 @@
-
-<center>
-
 ![Diagram 1](http://github.com/imatix/gitdown/raw/master/images/README_1.png)
 
-</center>
 <A name="toc1-18" title="Welcome To Gitdown" />
 
 Welcome To Gitdown
