@@ -26,7 +26,10 @@ This is version 2010.10.09 of Gitdown.  Changelog:
 
 * 2010.10.09: added .toc token to generate table of contents.
 
-.toc
+Contents
+--------
+
+.toc 1
 
 Installation and Use
 --------------------

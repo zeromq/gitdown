@@ -64,13 +64,18 @@ while ($line < @input) {
         if (/^\.set\s+(\w+)=(.*)\s*/) {
             $symbols {$1} = $2;
         }
-        elsif (/^\.toc/) {
+        elsif (/^\.toc(\s+([1-9]))/) {
             #   Determine top level in text after .toc
-            $tocl = 4;
-            for ($scan = $line; $scan < @input; $scan++) {
-                $_ = $input [$scan];
-                if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
-                    $tocl = $2 if $2 < $tocl;
+            if ($2) {
+                $tocl = $2;
+            }
+            else {
+                $tocl = 4;
+                for ($scan = $line; $scan < @input; $scan++) {
+                    $_ = $input [$scan];
+                    if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
+                        $tocl = $2 if $2 < $tocl;
+                    }
                 }
             }
             $prev = "";
