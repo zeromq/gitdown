@@ -93,7 +93,7 @@ The Gitdown workflow is:
               :                  |                   |
           References             |      Ditaa        |
               |                  |                {o}|
-              |                  +-------------------+
+              |                  +---------+---------+
               |                            |
               |                            |
               |                            v
