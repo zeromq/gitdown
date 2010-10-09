@@ -126,7 +126,7 @@ Gitdown is a pre-processor that adds these syntax elements on top of Markdown:
     .- comment                  Comment line
     .set name=value             Sets Gitdown symbol
     .sub oldval=newval          Replaces oldval by newval in every line
-    .toc                        Insert table of contents
+    .toc [top]                  Insert table of contents
     .end                        Everything past this is ignored
 
     $\(xxx)                     Value of variable, anywhere in text
@@ -156,6 +156,8 @@ Gitdown is a pre-processor that adds these syntax elements on top of Markdown:
     system("command")           Call a system utility
     lower("string")             Convert string to lower case
     upper("string")             Convert string to upper case
+
+The top argument for .toc tells it the top header level in the text. Lower levels are shown horizontally.  E.g. this file has level 2 headers in the text and uses `.toc 1` to get these laid-out on a single row.
 
 These symbols have special meaning:
 
