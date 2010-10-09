@@ -16,19 +16,6 @@ Table of Contents
 
 .toc
 
-## This is a test
-
-Some test text.
-
-### This is a TOC test
-
-Some test text.
-
-### This is a TOC test, part 2
-
-Some test text.
-
-
 Installation and Use
 --------------------
 
@@ -118,6 +105,7 @@ Gitdown is a pre-processor that adds these syntax elements on top of Markdown:
     .- comment                  Comment line
     .set name=value             Sets Gitdown symbol
     .sub oldval=newval          Replaces oldval by newval in every line
+    .toc                        Insert lazy table of contents
     .end                        Everything past this is ignored
 
     $\(xxx)                     Value of variable, anywhere in text
