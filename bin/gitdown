@@ -135,8 +135,8 @@ system ("rm -f images/$self\_*");
 if ($diagram) {
     system ("java -jar /usr/local/bin/ditaa0_9.jar images.html -o -h -E output.html");
     #   Need to trim twice for reasons I don't care to explore
-    system ("mogrify -trim images/*.png");
-    system ("mogrify -trim images/*.png");
+    system ("mogrify -trim images/$self\_*.png");
+    system ("mogrify -trim images/$self\_*.png");
 }
 system ("rm -f output.html images.html");
 exit (0);
