@@ -114,7 +114,7 @@ while ($line < @input) {
         }
         writeln_images ("</pre>");
         writeln ("<center>");
-        writeln ("![Diagram $diagram]($symbols{GIT}/raw/$symbols{BRANCH}$symbols{SUBDIR}/images/$self\_$diagram.png)");
+        writeln ("<img src=\"$symbols{GIT}/raw/$symbols{BRANCH}$symbols{SUBDIR}/images/$self\_$diagram.png\" alt=\"$diagram\">");
         writeln ("</center>");
     }
     else {
@@ -167,27 +167,27 @@ sub insert_anchors {
         $_ = $input [$line];
 
         if (/^===/) {
-            splice @input, $line - 2, 0, "<A name=\"toc1-$line\" title=\"$prev\" />";
+            splice @input, $line - 1, 0, "<A name=\"toc1-$line\" title=\"$prev\" />";
             $line++;
         }
         elsif (/^---/) {
-            splice @input, $line - 2, 0, "<A name=\"toc2-$line\" title=\"$prev\" />";
+            splice @input, $line - 1, 0, "<A name=\"toc2-$line\" title=\"$prev\" />";
             $line++;
         }
         elsif (/^# /) {
-            splice @input, $line - 1, 0, "<A name=\"toc1-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc1-$line\" title=\"$'\" />";
             $line++;
         }
         elsif (/^## /) {
-            splice @input, $line - 1, 0, "<A name=\"toc2-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc2-$line\" title=\"$'\" />";
             $line++;
         }
         elsif (/^### /) {
-            splice @input, $line - 1, 0, "<A name=\"toc3-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc3-$line\" title=\"$'\" />";
             $line++;
         }
         elsif (/^#### /) {
-            splice @input, $line - 1, 0, "<A name=\"toc4-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc4-$line\" title=\"$'\" />";
             $line++;
         }
     }
