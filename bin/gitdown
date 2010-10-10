@@ -64,7 +64,7 @@ while ($line < @input) {
         if (/^\.set\s+(\w+)=(.*)\s*/) {
             $symbols {$1} = $2;
         }
-        elsif (/^\.toc(\s+([1-9]))/) {
+        elsif (/^\.toc(\s+([1-9]))?/) {
             #   Determine top level in text after .toc
             if ($2) {
                 $tocl = $2;
