@@ -33,7 +33,8 @@ Contents
 License
 -------
 
-Copyright (c) 1996-2010 iMatix Corporation.
+Copyright (c) 2010 Pieter Hintjens
+Copyright (c) 1996-2010 iMatix Corporation
 
 This is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
@@ -64,7 +65,7 @@ The images directory holds images for all documents in the current directory.  Y
 How it Works
 ------------
 
-Gitdown exploits github.com's willingness to serve image blobs and Markdown documents that refer to them.  This means you can publish a document with correctly-formatted links, together with images, in a single Git operation.  It is a neat and comfortable way to work.  Kudos to Stathis Sideris for making Ditaa.
+Gitdown exploits github.com's willingness to serve image blobs and Markdown documents that refer to them.  This means you can publish a document with correctly-formatted links, together with images, in a single Git operation.  It is a neat and comfortable way to work.  Kudos to Stathis Sideris for making Ditaa.  Gitdown also adds a preprocessing layer for symbolic insertion and simple macros like 'table of contents'.  This code was recycled from [htmlpp](http://legacy.imatix.com/html/htmlpp/), a HTML preprocessor that looked a lot like Markdown.
 
 The Gitdown workflow is:
 
