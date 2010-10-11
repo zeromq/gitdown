@@ -146,7 +146,8 @@ exit (0);
 
 sub writeln {
     local ($_) = @_;
-    $_ = expand_symbols ($_);
+    #   Don't expand symbols in code blocks
+    $_ = expand_symbols ($_) unless /^    /;
     foreach $token (keys %subsset) {
         s/$token/$subsset{$token}/g;
     }
