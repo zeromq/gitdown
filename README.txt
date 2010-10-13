@@ -167,6 +167,12 @@ These symbols have special meaning:
 * BRANCH defines the respository branch, defaults to 'master'
 * SUBDIR defines the /sub/dir to the current file, if not empty
 
+These symbols are predefined by gitdown for you:
+
+* INPUT specifies the original input file name.
+* SELF specifies the input file name without extension.
+* OUTPUT specifies the current output file name,
+
 Markdown Syntax Summary
 -----------------------
 
