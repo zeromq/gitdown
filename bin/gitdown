@@ -57,9 +57,11 @@ die "Can't create images.html: $!"
     unless open (IMAGES, ">images.html");
 writeln_images ("<html>");
 
+# set defaults for symbols
 $symbols {"INPUT"}  = $input;
 $symbols {"SELF"}   = $self;
 $symbols {"OUTPUT"} = $output;
+$symbols {"PREBRANCH"} = "raw/";
 $symbols {"BRANCH"} = "master";
 
 $line = 0;
@@ -125,7 +127,7 @@ while ($line < @input) {
         }
         writeln_images ("</pre>");
         writeln ("<center>");
-        writeln ("<img src=\"$symbols{GIT}/raw/$symbols{BRANCH}$symbols{SUBDIR}/images/$self\_$diagram.png\" alt=\"$diagram\">");
+        writeln ("<img src=\"$symbols{GIT}$symbols{PREBRANCH}$symbols{BRANCH}$symbols{SUBDIR}images/$self\_$diagram.png\" alt=\"$diagram\">");
         writeln ("</center>");
     }
     else {
