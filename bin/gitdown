@@ -19,6 +19,12 @@
 #   with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+use File::Basename;
+
+# push gitdown path to include for modules
+my $path = dirname(__FILE__);
+push(@INC, $path);
+
 #   Uses the Perl SFL modules from htmlpp
 require 'sflcvdp.pl';                   #   SFL date picture formatting
 
@@ -133,7 +139,7 @@ close (OUTPUT);
 
 system ("rm -f images/$self\_*");
 if ($diagram) {
-    system ("java -jar /usr/local/bin/ditaa0_9.jar images.html -o -h -E output.html");
+    system ("java -jar $path/ditaa0_9.jar images.html -o -h -E output.html");
     #   Need to trim twice for reasons I don't care to explore
     system ("mogrify -trim images/$self\_*.png");
     system ("mogrify -trim images/$self\_*.png");
