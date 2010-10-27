@@ -19,6 +19,12 @@
 #   with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+use File::Basename;
+
+# push gitdown path to include for modules
+my $path = dirname(__FILE__);
+push(@INC, $path);
+
 #   Uses the Perl SFL modules from htmlpp
 require 'sflcvdp.pl';                   #   SFL date picture formatting
 
@@ -51,9 +57,11 @@ die "Can't create images.html: $!"
     unless open (IMAGES, ">images.html");
 writeln_images ("<html>");
 
+# set defaults for symbols
 $symbols {"INPUT"}  = $input;
 $symbols {"SELF"}   = $self;
 $symbols {"OUTPUT"} = $output;
+$symbols {"PREBRANCH"} = "raw/";
 $symbols {"BRANCH"} = "master";
 
 $line = 0;
@@ -119,7 +127,7 @@ while ($line < @input) {
         }
         writeln_images ("</pre>");
         writeln ("<center>");
-        writeln ("<img src=\"$symbols{GIT}/raw/$symbols{BRANCH}$symbols/{SUBDIR}images/$self\_$diagram.png\" alt=\"$diagram\">");
+        writeln ("<img src=\"$symbols{GIT}$symbols{PREBRANCH}$symbols{BRANCH}/$symbols{SUBDIR}images/$self\_$diagram.png\" alt=\"$diagram\">");
         writeln ("</center>");
     }
     else {
@@ -133,7 +141,7 @@ close (OUTPUT);
 
 system ("rm -f images/$self\_*");
 if ($diagram) {
-    system ("java -jar /usr/local/bin/ditaa0_9.jar images.html -o -h -E output.html");
+    system ("java -jar $path/ditaa0_9.jar images.html -o -h -E output.html");
     #   Need to trim twice for reasons I don't care to explore
     system ("mogrify -trim images/$self\_*.png");
     system ("mogrify -trim images/$self\_*.png");
