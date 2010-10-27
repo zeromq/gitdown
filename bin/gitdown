@@ -61,9 +61,10 @@ writeln_images ("<html>");
 $symbols {"INPUT"}  = $input;
 $symbols {"SELF"}   = $self;
 $symbols {"OUTPUT"} = $output;
-$symbols {"PREBRANCH"} = "raw/";
+$symbols {"PREBRANCH"} = "raw";
 $symbols {"BRANCH"} = "master";
 
+$imgpath = "";
 $line = 0;
 while ($line < @input) {
     $_ = $input [$line++];
@@ -71,6 +72,19 @@ while ($line < @input) {
         #   Process directive
         if (/^\.set\s+(\w+)=(.*)\s*/) {
             $symbols {$1} = $2;
+
+            # probably quicker to rebuild image path on each symbol definition
+            # than to check and see if it's changed
+            $imgpath = $symbols{GIT}.'/';
+            # allow double slash after : for url
+            $imgpath =~ s|(?<!:)/+|/|g;
+
+            my $subpath .= "$symbols{PREBRANCH}/$symbols{BRANCH}/$symbols{SUBDIR}/images/";
+            # remove starting /
+            $subpath =~ s|^/||;
+            # remove double /
+            $subpath =~ s|/+|/|g;
+            $imgpath .= $subpath;
         }
         elsif (/^\.toc(\s+([1-9]))?/) {
             #   Determine top level in text after .toc
@@ -127,7 +141,7 @@ while ($line < @input) {
         }
         writeln_images ("</pre>");
         writeln ("<center>");
-        writeln ("<img src=\"$symbols{GIT}$symbols{PREBRANCH}$symbols{BRANCH}$symbols{SUBDIR}images/$self\_$diagram.png\" alt=\"$diagram\">");
+        writeln ("<img src=\"$imgpath$self\_$diagram.png\" alt=\"$diagram\">");
         writeln ("</center>");
     }
     else {
