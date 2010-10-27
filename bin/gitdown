@@ -119,7 +119,7 @@ while ($line < @input) {
         }
         writeln_images ("</pre>");
         writeln ("<center>");
-        writeln ("<img src=\"$symbols{GIT}/raw/$symbols{BRANCH}$symbols{SUBDIR}/images/$self\_$diagram.png\" alt=\"$diagram\">");
+        writeln ("<img src=\"$symbols{GIT}/raw/$symbols{BRANCH}$symbols/{SUBDIR}images/$self\_$diagram.png\" alt=\"$diagram\">");
         writeln ("</center>");
     }
     else {

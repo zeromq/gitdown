@@ -163,9 +163,9 @@ The top argument for .toc tells it the top header level in the text. Lower level
 
 These symbols have special meaning:
 
-* GIT defines the root HTTP URL of the git repository
-* BRANCH defines the respository branch, defaults to 'master'
-* SUBDIR defines the /sub/dir to the current file, if not empty
+* GIT defines the root HTTP URL of the git repository.
+* BRANCH defines the respository branch, defaults to 'master'.
+* SUBDIR defines the sub/dir/ to the current file, if not empty, should end in / if not empty.
 
 These symbols are predefined by gitdown for you:
 
