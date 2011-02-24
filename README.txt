@@ -1,4 +1,4 @@
-.set GIT=http://github.com/imatix/gitdown
+.set GIT=https://github.com/imatix/gitdown
 
 [diagram]
     /----------------------------------------------------------\+\
