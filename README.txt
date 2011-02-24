@@ -34,8 +34,8 @@ Contents
 License
 -------
 
-Copyright (c) 2010 Pieter Hintjens
-Copyright (c) 1996-2010 iMatix Corporation
+Copyright (c) 2010-2011 Pieter Hintjens
+Copyright (c) 1996-2011 iMatix Corporation
 
 This is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
