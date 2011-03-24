@@ -3,7 +3,7 @@
 #
 #   See README.txt for details.
 #
-#   Copyright (c) 1996-2010 iMatix Corporation
+#   Copyright (c) 1996-2011 iMatix Corporation
 #
 #   This is free software; you can redistribute it and/or modify it under the
 #   terms of the GNU General Public License as published by the Free Software
@@ -28,7 +28,7 @@ push(@INC, $path);
 #   Uses the Perl SFL modules from htmlpp
 require 'sflcvdp.pl';                   #   SFL date picture formatting
 
-$version = "2010.10.09";
+$version = "2011.03.24";
 
 #   Parse and validate provided filename
 die "Syntax: gitdoc textfilename\n"
@@ -65,9 +65,8 @@ $symbols {"PREBRANCH"} = "raw";
 $symbols {"BRANCH"} = "master";
 
 $imgpath = "";
-$line = 0;
-while ($line < @input) {
-    $_ = $input [$line++];
+
+foreach (@input) {
     if (/^\./) {
         #   Process directive
         if (/^\.set\s+(\w+)=(.*)\s*/) {
@@ -119,6 +118,25 @@ while ($line < @input) {
         }
         elsif (/^\.\-/) {
             #   Comment, ignore
+        }
+        elsif (/^\.pull (.*)(@[a-zA-Z0-9]+)(,(.*)\s*)?/) {
+            $source = $1;
+            $tag = $2;
+            $opts = $4;
+            die "Can't read $source: $!"
+                unless open (SOURCE, $source);
+            while (<SOURCE>) {
+                if (/$tag/) {
+                    while (<SOURCE>) {
+                        last if /@[a-zA-Z0-9]+/;
+                        chop;
+                        $_ = "    $_" if ($opts eq "code");
+                        s/^    // if ($opts eq "left");
+                        writeln ($_);
+                    }
+                }
+            }
+            close (SOURCE);
         }
         elsif (/^\.end/) {
             writeln ("(More coming soon...)");
