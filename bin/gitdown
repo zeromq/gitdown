@@ -66,7 +66,9 @@ $symbols {"BRANCH"} = "master";
 
 $imgpath = "";
 
-foreach (@input) {
+$line = 0;
+while ($line < @input) {
+    $_ = $input [$line++];
     if (/^\./) {
         #   Process directive
         if (/^\.set\s+(\w+)=(.*)\s*/) {
