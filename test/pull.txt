@@ -1,0 +1,16 @@
+This file should pull three chunks from a file named chunks
+
+This is chunk 1, which is plain text 
+.pull chunks@ch1
+
+This is chunk 2, which is code
+
+.pull chunks@ch2,code
+
+This is chunk 3, which is left aligned
+
+.pull chunks@ch3,left
+
+This is file2, no chunk, plain text
+
+.pull file2

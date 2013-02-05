@@ -121,21 +121,41 @@ while ($line < @input) {
         elsif (/^\.\-/) {
             #   Comment, ignore
         }
-        elsif (/^\.pull (.*)(@[a-zA-Z0-9]+)(,(.*)\s*)?/) {
-            $source = $1;
-            $tag = $2;
-            $opts = $4;
+        elsif (/^\.pull\s+(.*?)([@,].+)?\s*$/) {
+            my ($source, $rest) = ($1, $2);
+            my ($tag, $opts); #tags and opts are both optional
+
+            if ($rest =~ /^(@[a-zA-Z0-9]+)(,.+)?/) {
+                $tag = $1;
+                $rest = $2;
+            }
+
+            if ($rest =~ /,(.*)/) {
+                $opts = $1;
+            }
+
             die "Can't read $source: $!"
-                unless open (SOURCE, $source);
+            unless open (SOURCE, $source);
+
+            my $apply_opts = sub {
+                chomp;
+                $_ = "    $_" if ($opts eq "code");
+                s/^ {4}// if ($opts eq "left");
+
+            };
             while (<SOURCE>) {
-                if (/$tag/) {
-                    while (<SOURCE>) {
-                        last if /@[a-zA-Z0-9]+/;
-                        chop;
-                        $_ = "    $_" if ($opts eq "code");
-                        s/^    // if ($opts eq "left");
-                        writeln ($_);
+                if ($tag) {
+                    if (/$tag/) {
+                        while (<SOURCE>) {
+                            last if /@[a-zA-Z0-9]+/;
+                            $apply_opts->();
+                            writeln ($_);
+                        }
                     }
+                }
+                else {
+                    $apply_opts->();
+                    writeln ($_);
                 }
             }
             close (SOURCE);
