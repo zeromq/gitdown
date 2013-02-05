@@ -23,6 +23,7 @@ Gitdown is written and maintained by Pieter Hintjens.  Please use the issue [tra
 
 This is version 2011.03.24 of Gitdown. Changelog:
 
+* 2013.02.05: Gyepi Sam changed pull command to make chunk specification optional.
 * 2010.03.24: added .pull command to include chunks from other files.
 * 2010.10.11: don't do symbol substitution in code blocks.
 * 2010.10.09: added .toc token to generate table of contents.
@@ -130,7 +131,7 @@ Gitdown is a pre-processor that adds these syntax elements on top of Markdown:
     .set name=value             Sets Gitdown symbol
     .sub oldval=newval          Replaces oldval by newval in every line
     .toc [top]                  Insert table of contents
-    .pull srcfile@tag[,opts]    Pull a chunk of text from sourcefile
+    .pull srcfile[@tag][,opts]  Pull a chunk of text, or the whole file, from srcfile
     .end                        Everything past this is ignored
 
     $\(xxx)                     Value of variable, anywhere in text
@@ -163,7 +164,13 @@ Gitdown is a pre-processor that adds these syntax elements on top of Markdown:
 
 The top argument for .toc tells it the top header level in the text. Lower levels are shown horizontally.  E.g. this file has level 2 headers in the text and uses `.toc 1` to get these laid-out on a single row.
 
-The opts argument for .pull can be: 'code' to indicate the results should be indented 4 spaces. An opts of 'left' removes any left margin. A chunk of text is identified by '@tag' anywhere in the line before the chunk, and any other tag signalling the end. '@end' can be used to close any chunk. Tag names must be alphanumeric.
+If the .pull command includes an optional @tag, the named chunk of text is pulled from the source file.
+A chunk of text is identified by '@tag' anywhere in the line before the chunk, and any other tag signalling the end. '@end' can be used to close any chunk. Tag names must be alphanumeric.
+If @tag is omitted, the entire file is included.
+
+The opts argument for .pull can be: 'code' to indicate the results should be indented 4 spaces.
+An opts of 'left' removes any left margin.
+
 
 These symbols have special meaning:
 

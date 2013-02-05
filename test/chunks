@@ -1,0 +1,22 @@
+@ch1
+
+The reward for work well done is the opportunity to do more.
+
+@end
+
+@ch2
+
+for(int i = 0; i < argc ; i++) {
+    printf("%s\n", argv[i]);
+}
+
+@end
+
+@ch3
+
+    <files>
+     <name="/etc/passwd" perm="0600" />
+     <name="/etc/quotd" />
+    </files>
+
+@end
