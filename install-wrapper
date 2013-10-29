@@ -1,0 +1,32 @@
+#!/bin/sh
+
+destdir=$1
+
+if [ -z "$destdir" ] ; then
+    destdir=$HOME/bin
+    if [ -d "$destdir" ]; then
+      echo "installing in default directory: $destdir"
+    else
+      exit
+    fi
+else
+  if ! [ -d "$destdir" ] ; then
+    echo "path [$destdir] is not a directory"
+    exit
+  fi
+fi
+        
+srcdir=$(readlink -f $(dirname $0))
+
+target=$destdir/gitdown
+
+if [ -e "$target" ] ; then
+    echo "file $target already exists!"
+    exit
+fi
+
+cat <<EOS > $target
+#!/bin/sh
+exec env PERLLIB=$srcdir $srcdir/bin/gitdown \$@
+EOS
+chmod +x $target

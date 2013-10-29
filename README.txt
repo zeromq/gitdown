@@ -49,7 +49,14 @@ The code is in the bin subdirectory.  Here is how I install it on a new box:
     sudo cp bin/* /usr/local/bin
     export PERLLIB=$PATH    #   goes into .bash_profile
 
-Gitdown includes Ditaa/0.9 and assumes that Ditaa goes into /usr/local/bin/ditaa0_9.jar.  Feel free to propose a better design.
+Gitdown includes Ditaa/0.9 and assumes that Ditaa goes into /usr/local/bin/ditaa0_9.jar.
+
+Another option is to leave the files in the git directory and install a wrapper script. 
+Assuming the directory ~/bin exists and is in your path, you can do the following:
+
+    install-wrapper ~/bin
+
+to install the file ~/bin/gitdown, which will set things up to run correctly. 
 
 Gitdown assumes that these tools are already installed on your box, which is easy if you're running Linux:
 
