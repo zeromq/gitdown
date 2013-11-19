@@ -62,6 +62,7 @@ Gitdown assumes that these tools are already installed on your box, which is eas
 
 * *ImageMagick*, specifically `mogrify`.
 * *Perl*.
+* *Java*, a Java run-time environment is needed to run ditaa.
 
 To use Gitdown, edit a text document much like this README.txt.  Then:
 
