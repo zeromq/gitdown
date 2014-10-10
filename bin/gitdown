@@ -28,7 +28,7 @@ push(@INC, $path);
 #   Uses the Perl SFL modules from htmlpp
 require 'sflcvdp.pl';                   #   SFL date picture formatting
 
-$version = "2011.03.24";
+$version = "2014.10.10";
 
 #   Parse and validate provided filename
 die "Syntax: gitdoc textfilename\n"
@@ -43,9 +43,49 @@ die "Input should be a .txt file, not a .md file\n"
 #   Read input file into @input array
 die "Can't read $input: $!"
     unless open (INPUT, $input);
+    
 while (<INPUT>) {
     chop;
-    push @input, $_;
+    if (/^\.pull\s+(.*?)([@,].+)?\s*$/) {
+        my ($source, $rest) = ($1, $2);
+        my ($tag, $opts); #tags and opts are both optional
+
+        if ($rest =~ /^(@[a-zA-Z0-9]+)(,.+)?/) {
+            $tag = $1;
+            $rest = $2;
+        }
+        if ($rest =~ /,(.*)/) {
+            $opts = $1;
+        }
+        die "Can't read $source: $!"
+        unless open (SOURCE, $source);
+
+        my $apply_opts = sub {
+            chomp;
+            $_ = "    $_" if ($opts eq "code");
+            s/^ {4}// if ($opts eq "left");
+
+        };
+        while (<SOURCE>) {
+            if ($tag) {
+                if (/$tag/) {
+                    while (<SOURCE>) {
+                        last if /@[a-zA-Z0-9]+/;
+                        $apply_opts->();
+                        push @input, $_;
+                    }
+                }
+            }
+            else {
+                $apply_opts->();
+                push @input, $_;
+            }
+        }
+        close (SOURCE);
+    }
+    else {
+        push @input, $_;
+    }
 }
 close (INPUT);
 &insert_anchors;
@@ -120,45 +160,6 @@ while ($line < @input) {
         }
         elsif (/^\.\-/) {
             #   Comment, ignore
-        }
-        elsif (/^\.pull\s+(.*?)([@,].+)?\s*$/) {
-            my ($source, $rest) = ($1, $2);
-            my ($tag, $opts); #tags and opts are both optional
-
-            if ($rest =~ /^(@[a-zA-Z0-9]+)(,.+)?/) {
-                $tag = $1;
-                $rest = $2;
-            }
-
-            if ($rest =~ /,(.*)/) {
-                $opts = $1;
-            }
-
-            die "Can't read $source: $!"
-            unless open (SOURCE, $source);
-
-            my $apply_opts = sub {
-                chomp;
-                $_ = "    $_" if ($opts eq "code");
-                s/^ {4}// if ($opts eq "left");
-
-            };
-            while (<SOURCE>) {
-                if ($tag) {
-                    if (/$tag/) {
-                        while (<SOURCE>) {
-                            last if /@[a-zA-Z0-9]+/;
-                            $apply_opts->();
-                            writeln ($_);
-                        }
-                    }
-                }
-                else {
-                    $apply_opts->();
-                    writeln ($_);
-                }
-            }
-            close (SOURCE);
         }
         elsif (/^\.end/) {
             writeln ("(More coming soon...)");
