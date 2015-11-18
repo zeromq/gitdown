@@ -109,7 +109,7 @@ $imgpath = "";
 $line = 0;
 while ($line < @input) {
     $_ = $input [$line++];
-    if (/^\./) {
+    if (/^\.[^\/]/) {
         #   Process directive
         if (/^\.set\s+(\w+)=(.*)\s*/) {
             $symbols {$1} = $2;
@@ -166,7 +166,7 @@ while ($line < @input) {
             $EOD = 1;       #   Stop output here
         }
         else {
-            print "Illegal directive $_ at line $.\n";
+            print "Illegal directive $_ at line $line.\n";
         }
     }
     elsif ($_ eq "[diagram]") {
