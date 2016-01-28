@@ -190,6 +190,7 @@ while ($line < @input) {
         writeln ($_);
     }
 }
+print OUTPUT "\n_This documentation was generated using [Gitdown](https://github.com/zeromq/gitdown)_\n";
 writeln_images ("</html>");
 close (IMAGES);
 close (OUTPUT);
