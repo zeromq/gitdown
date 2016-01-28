@@ -145,12 +145,18 @@ while ($line < @input) {
             for ($scan = $line; $scan < @input; $scan++) {
                 $_ = $input [$scan];
                 if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
-                    #   Top level items at left, others along same line...
-                    if ($2 > $tocl) {
-                        writeln ("&emsp;<a href=\"#$1\">$3</a>");
+                    #   Top level items at left and bold, secondary at
+                    #   left, others along same line...
+					$link = "<a href=\"#$1\">$3</a>";
+					$level = $2 - $tocl;
+                    if ($level == 0) {
+                        writeln ("\n**$link**");
+                    }
+                    elsif ($level == 1) {
+                        writeln ("*  $link");
                     }
                     else {
-                        writeln ("\n**<a href=\"#$1\">$3</a>**");
+                        writeln ("&emsp;$link");
                     }
                 }
             }
