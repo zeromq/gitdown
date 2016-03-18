@@ -203,7 +203,13 @@ close (OUTPUT);
 
 system ("rm -f images/$self\_*");
 if ($diagram) {
-    system ("java -jar $path/ditaa0_9.jar images.html -o -h -E output.html");
+    #if environment is cygwin
+    if (-e '/usr/bin/cygpath') {
+	system ("java -jar `cygpath -w $path/ditaa0_9.jar` images.html -o -h -E output.html");
+    }
+    else {
+   	system ("java -jar $path/ditaa0_9.jar images.html -o -h -E output.html");
+    }
     #   Need to trim twice for reasons I don't care to explore
     system ("mogrify -trim images/$self\_*.png");
     system ("mogrify -trim images/$self\_*.png");
