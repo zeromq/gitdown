@@ -84,7 +84,7 @@ Installation in Cygwin
       apt-cyg install ImageMagick
       
     # install Java JDK
-      download from [here] http://www.oracle.com/technetwork/java/javase/downloads/index.html, then restart your PC for the env vars to reflect
+      download from [here](http://www.oracle.com/technetwork/java/javase/downloads/index.html), then restart your PC for the env vars to reflect
 
     # copy the binaries to /usr/local/bin
     cp bin/* to /usr/local/bin
