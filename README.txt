@@ -73,6 +73,26 @@ To use Gitdown, edit a text document much like this README.txt.  Then:
 
 The images directory holds images for all documents in the current directory.  You can write documents anywhere on the git tree but if they are not at the root you must tell Gitdown how to create a full image path by setting the SUBDIR symbol (see below).
 
+
+Installation in Cygwin
+----------------------
+    # install apt-cyg - cygwin package manager
+      lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
+      install apt-cyg /bin
+
+    # install ImageMagick
+      apt-cyg install ImageMagick
+      
+    # install Java JDK
+      download from [here](http://www.oracle.com/technetwork/java/javase/downloads/index.html), then restart your PC for the env vars to reflect
+
+    # copy the binaries to /usr/local/bin
+    cp bin/* to /usr/local/bin
+
+    # add this to your ~/.bash_profile
+    export PERLLIB=$PATH
+    
+
 How it Works
 ------------
 
