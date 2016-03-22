@@ -76,21 +76,25 @@ The images directory holds images for all documents in the current directory.  Y
 
 Installation in Cygwin
 ----------------------
-    # install apt-cyg - cygwin package manager
+
+Install apt-cyg - cygwin package manager:
+
       lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
       install apt-cyg /bin
 
-    # install ImageMagick
+Install ImageMagick:
+
       apt-cyg install ImageMagick
       
-    # install Java JDK
-      download from [here](http://www.oracle.com/technetwork/java/javase/downloads/index.html), then restart your PC for the env vars to reflect
+Download and install Java JDK from [here](http://www.oracle.com/technetwork/java/javase/downloads/index.html), then restart your PC for the env vars to reflect
 
-    # copy the binaries to /usr/local/bin
-    cp bin/* to /usr/local/bin
+Copy the binaries to /usr/local/bin:
 
-    # add this to your ~/.bash_profile
-    export PERLLIB=$PATH
+      cp bin/* to /usr/local/bin
+
+Add this to your ~/.bash_profile:
+
+      export PERLLIB=$PATH
     
 
 How it Works
