@@ -147,8 +147,8 @@ while ($line < @input) {
                 if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
                     #   Top level items at left and bold, secondary at
                     #   left, others along same line...
-					$link = "<a href=\"#$1\">$3</a>";
-					$level = $2 - $tocl;
+                    $link = "<a href=\"#$1\">$3</a>";
+                    $level = $2 - $tocl;
                     if ($level == 0) {
                         writeln ("\n**$link**");
                     }
@@ -196,7 +196,11 @@ while ($line < @input) {
         writeln ($_);
     }
 }
-print OUTPUT "\n_This documentation was generated using [Gitdown](https://github.com/zeromq/gitdown)_\n";
+$projectdir = $ENV{PWD};
+$projectdir =~ s/[\/]+([^\/]+\/)*([^\/]+)[\/]*/\2/;
+print OUTPUT "\n_This documentation was generated from ";
+print OUTPUT $projectdir . "/" . $input;
+print OUTPUT " using [Gitdown](https://github.com/zeromq/gitdown)_\n";
 writeln_images ("</html>");
 close (IMAGES);
 close (OUTPUT);
