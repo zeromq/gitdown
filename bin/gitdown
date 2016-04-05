@@ -149,7 +149,7 @@ while ($line < @input) {
                     #   left, others along same line...
                     $link = "<a href=\"#$1\">$3</a>";
                     $level = $2 - $tocl;
-                    if ($level == 0) {
+                    if ($level <= 0) {
                         writeln ("\n**$link**");
                     }
                     elsif ($level == 1) {
