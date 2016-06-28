@@ -43,7 +43,7 @@ die "Input should be a .txt file, not a .md file\n"
 #   Read input file into @input array
 die "Can't read $input: $!"
     unless open (INPUT, $input);
-    
+
 while (<INPUT>) {
     chop;
     if (/^\.pull\s+(.*?)([@,].+)?\s*$/) {
@@ -66,6 +66,11 @@ while (<INPUT>) {
             s/^ {4}// if ($opts eq "left");
 
         };
+        # Add code fences for markdown highlighting
+        if ($opts eq "code") {
+            my $ext = (fileparse("$source", qr/[^.]*/))[2];
+            push @input, "```$ext"
+        }
         while (<SOURCE>) {
             if ($tag) {
                 if (/$tag/) {
@@ -81,6 +86,7 @@ while (<INPUT>) {
                 push @input, $_;
             }
         }
+        push @input, "```" if ($opts eq "code");
         close (SOURCE);
     }
     else {
