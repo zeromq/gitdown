@@ -100,7 +100,7 @@ Add this to your ~/.bash_profile:
 How it Works
 ------------
 
-Gitdown exploits github.com's willingness to serve image blobs and Markdown documents that refer to them.  This means you can publish a document with correctly-formatted links, together with images, in a single Git operation.  It is a neat and comfortable way to work.  Kudos to Stathis Sideris for making Ditaa.  Gitdown also adds a preprocessing layer for symbolic insertion and simple macros like 'table of contents'.  This code was recycled from [htmlpp](http://legacy.imatix.com/html/htmlpp/), a HTML preprocessor that looked a lot like Markdown.
+Gitdown exploits github.com's willingness to serve image blobs and Markdown documents that refer to them.  This means you can publish a document with correctly-formatted links, together with images, in a single Git operation.  It is a neat and comfortable way to work.  Kudos to Stathis Sideris for making Ditaa.  Gitdown also adds a preprocessing layer for symbolic insertion and simple macros like 'table of contents'.  This code was recycled from [htmlpp](https://imatix-legacy.github.io/htmlpp/), a HTML preprocessor that looked a lot like Markdown.
 
 The Gitdown workflow is:
 
