@@ -132,6 +132,8 @@ while ($line < @input) {
             # remove double /
             $subpath =~ s|/+|/|g;
             $imgpath .= $subpath;
+	    # remove starting /
+	    $imgpath =~ s|^/+||;
         }
         elsif (/^\.toc(\s+([1-9]))?/) {
             #   Determine top level in text after .toc
