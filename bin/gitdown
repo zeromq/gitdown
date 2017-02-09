@@ -261,27 +261,27 @@ sub insert_anchors {
         $_ = $input [$line];
 
         if (/^===/) {
-            splice @input, $line - 1, 0, "<A name=\"toc1-$line\" title=\"$prev\" />";
+            splice @input, $line - 1, 0, "<A name=\"toc1-$line\" title=\"$prev\"></A>";
             $line++;
         }
         elsif (/^---/) {
-            splice @input, $line - 1, 0, "<A name=\"toc2-$line\" title=\"$prev\" />";
+            splice @input, $line - 1, 0, "<A name=\"toc2-$line\" title=\"$prev\"></A>";
             $line++;
         }
         elsif (/^# /) {
-            splice @input, $line, 0, "<A name=\"toc1-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc1-$line\" title=\"$'\"></A>";
             $line++;
         }
         elsif (/^## /) {
-            splice @input, $line, 0, "<A name=\"toc2-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc2-$line\" title=\"$'\"></A>";
             $line++;
         }
         elsif (/^### /) {
-            splice @input, $line, 0, "<A name=\"toc3-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc3-$line\" title=\"$'\"></A>";
             $line++;
         }
         elsif (/^#### /) {
-            splice @input, $line, 0, "<A name=\"toc4-$line\" title=\"$'\" />";
+            splice @input, $line, 0, "<A name=\"toc4-$line\" title=\"$'\"></A>";
             $line++;
         }
     }
