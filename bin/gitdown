@@ -94,7 +94,6 @@ while (<INPUT>) {
     }
 }
 close (INPUT);
-&insert_anchors;
 
 die "Can't create $output: $!"
     unless open (OUTPUT, ">$output");
@@ -136,7 +135,7 @@ while ($line < @input) {
 	    $imgpath =~ s|^/+||;
         }
         elsif (/^\.toc(\s+([1-9]))?/) {
-            #   Determine top level in text after .toc
+            #   Determine toc level in text after .toc i.e. `.toc 3`
             if ($2) {
                 $tocl = $2;
             }
@@ -144,19 +143,24 @@ while ($line < @input) {
                 $tocl = 4;
                 for ($scan = $line; $scan < @input; $scan++) {
                     $_ = $input [$scan];
-                    if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
-                        $tocl = $2 if $2 < $tocl;
+                    if (/^##+ (.*)/) {
+                        $level = tr/^#+//;
+                        $tocl = $level if $level < $tocl;
                     }
                 }
             }
             $prev = "";
             for ($scan = $line; $scan < @input; $scan++) {
                 $_ = $input [$scan];
-                if (/<A name="(toc([0-9])-.*)" title=\"(.*)\"/) {
-                    #   Top level items at left and bold, secondary at
-                    #   left, others along same line...
-                    $link = "<a href=\"#$1\">$3</a>";
-                    $level = $2 - $tocl;
+                if (/^##+ (.*)/) {
+                    #   A Header with one `#` is the title and thus will not be
+                    #   added to the toc. Also this will not falsely detect code
+                    #   comments.
+                    $linkname = $1;
+                    $linkanchor = lc($1);
+                    $linkanchor =~ s/\s/-/g;
+                    $link = "[$linkname](#$linkanchor)";
+                    $level = tr/^#+// - $tocl;
                     if ($level <= 0) {
                         writeln ("\n**$link**");
                     }
@@ -249,42 +253,6 @@ sub writeln_images {
         s/$token/$subsset{$token}/g;
     }
     print IMAGES "$_\n" unless $EOD;
-}
-
-
-#   Insert anchors into text before each header
-
-sub insert_anchors {
-    $prev = "";
-    for ($line = 0; $line < @input; $line++) {
-        $prev = $_;
-        $_ = $input [$line];
-
-        if (/^===/) {
-            splice @input, $line - 1, 0, "<A name=\"toc1-$line\" title=\"$prev\"></A>";
-            $line++;
-        }
-        elsif (/^---/) {
-            splice @input, $line - 1, 0, "<A name=\"toc2-$line\" title=\"$prev\"></A>";
-            $line++;
-        }
-        elsif (/^# /) {
-            splice @input, $line, 0, "<A name=\"toc1-$line\" title=\"$'\"></A>";
-            $line++;
-        }
-        elsif (/^## /) {
-            splice @input, $line, 0, "<A name=\"toc2-$line\" title=\"$'\"></A>";
-            $line++;
-        }
-        elsif (/^### /) {
-            splice @input, $line, 0, "<A name=\"toc3-$line\" title=\"$'\"></A>";
-            $line++;
-        }
-        elsif (/^#### /) {
-            splice @input, $line, 0, "<A name=\"toc4-$line\" title=\"$'\"></A>";
-            $line++;
-        }
-    }
 }
 
 
