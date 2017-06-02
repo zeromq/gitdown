@@ -157,8 +157,9 @@ while ($line < @input) {
                     #   added to the toc. Also this will not falsely detect code
                     #   comments.
                     $linkname = $1;
-                    $linkanchor = lc($1);
-                    $linkanchor =~ s/\s/-/g;
+                    $linkanchor = lc($1);       #  Convert to lowercase
+                    $linkanchor =~ s/\s/-/g;    #  Replace whitespace with dash
+                    $linkanchor =~ tr/\$#@~!&*()[];.,:?^ `\\\///d;  #  Strip illegal characters
                     $link = "[$linkname](#$linkanchor)";
                     $level = tr/^#+// - $tocl;
                     if ($level <= 0) {
